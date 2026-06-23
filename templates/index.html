@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ShaktiQuery</title>
+</head>
+<body>
+
+    <h1>ShaktiQuery</h1>
+    <h3>SQL Query Performance Analyzer</h3>
+
+    <form method="POST">
+
+        <textarea
+            name="query"
+            rows="10"
+            cols="80"
+            placeholder="Enter SQL query here..."
+        ></textarea>
+
+        <br><br>
+
+        <button type="submit">
+            Execute Query
+        </button>
+
+    </form>
+
+    {% if execution_time %}
+
+        <h3>
+            Execution Time:
+            {{ execution_time }} ms
+        </h3>
+
+    {% endif %}
+
+    {% if recommendations %}
+
+        <h3>Recommendations</h3>
+
+        <ul>
+        {% for r in recommendations %}
+            <li>{{ r }}</li>
+        {% endfor %}
+        </ul>
+
+    {% endif %}
+
+</body>
+</html>
