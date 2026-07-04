@@ -3,48 +3,92 @@
 <head>
     <title>ShaktiQuery</title>
 </head>
+
 <body>
 
-    <h1>ShaktiQuery</h1>
-    <h3>SQL Query Performance Analyzer</h3>
+<h1>ShaktiQuery</h1>
 
-    <form method="POST">
+<form method="POST">
 
-        <textarea
-            name="query"
-            rows="10"
-            cols="80"
-            placeholder="Enter SQL query here..."
-        ></textarea>
+<textarea
+name="query"
+rows="10"
+cols="80"
+placeholder="Enter SQL query"></textarea>
 
-        <br><br>
+<br><br>
 
-        <button type="submit">
-            Execute Query
-        </button>
+<button type="submit">
+Execute Query
+</button>
 
-    </form>
+</form>
 
-    {% if execution_time %}
+{% if error %}
 
-        <h3>
-            Execution Time:
-            {{ execution_time }} ms
-        </h3>
+<h3>Error</h3>
 
-    {% endif %}
+<p>{{ error }}</p>
 
-    {% if recommendations %}
+{% endif %}
 
-        <h3>Recommendations</h3>
+{% if execution_time %}
 
-        <ul>
-        {% for r in recommendations %}
-            <li>{{ r }}</li>
-        {% endfor %}
-        </ul>
+<h3>Execution Time</h3>
 
-    {% endif %}
+<p>{{ execution_time }} ms</p>
+
+{% endif %}
+
+{% if recommendations %}
+
+<h3>Recommendations</h3>
+
+<ul>
+
+{% for rec in recommendations %}
+
+<li>{{ rec }}</li>
+
+{% endfor %}
+
+</ul>
+
+{% endif %}
+
+{% if rows %}
+
+<h3>Results</h3>
+
+<table border="1">
+
+<tr>
+
+{% for column in columns %}
+
+<th>{{ column }}</th>
+
+{% endfor %}
+
+</tr>
+
+{% for row in rows %}
+
+<tr>
+
+{% for value in row %}
+
+<td>{{ value }}</td>
+
+{% endfor %}
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endif %}
 
 </body>
 </html>

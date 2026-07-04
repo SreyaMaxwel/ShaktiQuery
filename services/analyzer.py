@@ -1,27 +1,31 @@
 def analyze_query(query):
-
     recommendations = []
 
-    q = query.lower()
+    query_lower = query.lower()
 
-    if "select *" in q:
+    if "select *" in query_lower:
         recommendations.append(
-            "Avoid SELECT *. Retrieve only required columns."
+            "Avoid using SELECT *. Fetch only the required columns."
         )
 
-    if "where" in q:
+    if "where" in query_lower:
         recommendations.append(
-            "Consider indexing columns used in WHERE clauses."
+            "Consider creating indexes on columns used in WHERE clauses."
         )
 
-    if "order by" in q:
+    if "order by" in query_lower:
         recommendations.append(
             "Ensure ORDER BY columns are indexed."
         )
 
-    if "like '%" in q:
+    if "like '%" in query_lower:
         recommendations.append(
-            "Leading wildcard searches may cause full table scans."
+            "Leading wildcard searches may prevent index usage."
+        )
+
+    if not recommendations:
+        recommendations.append(
+            "No optimization suggestions for this query."
         )
 
     return recommendations

@@ -1,26 +1,27 @@
 import time
-from database import get_connection
+from config.database import get_connection
 
 
 def execute_query(query):
-
     conn = get_connection()
     cur = conn.cursor()
 
-    start = time.time()
+    start = time.perf_counter()
 
     cur.execute(query)
 
     rows = []
+    columns = []
 
-    if query.strip().lower().startswith("select"):
+    if cur.description:
+        columns = [desc[0] for desc in cur.description]
         rows = cur.fetchall()
 
-    execution_time = (time.time() - start) * 1000
+    execution_time = round((time.perf_counter() - start) * 1000, 3)
 
     conn.commit()
 
     cur.close()
     conn.close()
 
-    return rows, execution_time
+    return rows, columns, execution_time
