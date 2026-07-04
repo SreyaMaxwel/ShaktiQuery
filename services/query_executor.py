@@ -25,3 +25,23 @@ def execute_query(query):
     conn.close()
 
     return rows, columns, execution_time
+
+
+def save_query_history(query, execution_time, rows_returned):
+
+    conn = get_connection()
+    cur = conn.cursor()
+
+    cur.execute(
+        """
+        INSERT INTO query_history
+        (query_text, execution_time, rows_returned)
+        VALUES (%s, %s, %s)
+        """,
+        (query, execution_time, rows_returned)
+    )
+
+    conn.commit()
+
+    cur.close()
+    conn.close()
